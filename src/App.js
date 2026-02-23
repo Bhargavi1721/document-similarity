@@ -17,10 +17,16 @@ export default function App() {
     formData.append("file2", file2);
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/similarity", {
-        method: "POST",
-        body: formData
-      });
+      const res = await fetch("https://document-similarity-3ah4.onrender.com/similarity", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    doc1,
+    doc2
+  })
+})
 
       const data = await res.json();
       setScore(data.score);
