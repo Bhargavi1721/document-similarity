@@ -5,33 +5,32 @@ export default function App() {
   const [file1, setFile1] = useState(null);
   const [file2, setFile2] = useState(null);
   const [score, setScore] = useState(null);
-
   async function handleCompare() {
-    if (!file1 || !file2) {
-      alert("Upload both documents");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("file1", file1);
-    formData.append("file2", file2);
-
-    try {
-      const res = await fetch(
-        "https://document-similarity-3ah4.onrender.com/similarity",
-        {
-          method: "POST",
-          body: formData
-        }
-      );
-
-      const data = await res.json();
-      setScore(data.score);
-
-    } catch (err) {
-      alert("Backend not running");
-    }
+  if (!file1 || !file2) {
+    alert("Upload both documents");
+    return;
   }
+
+  const formData = new FormData();
+  formData.append("file1", file1);
+  formData.append("file2", file2);
+
+  try {
+    const res = await fetch(
+      "https://document-similarity-3ah4.onrender.com/similarity",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const data = await res.json();
+    setScore(data.score);
+
+  } catch (err) {
+    alert("Backend not running");
+  }
+}
 
   return (
     <div className="container">
