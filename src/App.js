@@ -17,16 +17,13 @@ export default function App() {
     formData.append("file2", file2);
 
     try {
-      const res = await fetch("https://document-similarity-3ah4.onrender.com/similarity", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    doc1,
-    doc2
-  })
-})
+      const res = await fetch(
+        "https://document-similarity-3ah4.onrender.com/similarity",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
 
       const data = await res.json();
       setScore(data.score);
@@ -41,30 +38,39 @@ export default function App() {
       <h1>Document Similarity Checker</h1>
 
       <div className="upload">
-        <input type="file" onChange={e => setFile1(e.target.files[0])} />
-        <input type="file" onChange={e => setFile2(e.target.files[0])} />
+        <input
+          type="file"
+          onChange={(e) => setFile1(e.target.files[0])}
+        />
+
+        <input
+          type="file"
+          onChange={(e) => setFile2(e.target.files[0])}
+        />
       </div>
 
-      <button onClick={handleCompare}>Compare Documents</button>
+      <button onClick={handleCompare}>
+        Compare Documents
+      </button>
 
       {score !== null && (
-  <div
-    className="score"
-    style={{
-      backgroundColor:
-        score > 0.75 ? "#d4edda" :
-        score > 0.40 ? "#fff3cd" :
-                       "#f8d7da",
+        <div
+          className="score"
+          style={{
+            backgroundColor:
+              score > 0.75 ? "#d4edda" :
+              score > 0.40 ? "#fff3cd" :
+                             "#f8d7da",
 
-      color:
-        score > 0.75 ? "#155724" :
-        score > 0.40 ? "#856404" :
-                       "#721c24"
-    }}
-  >
-    Similarity Score: {(score * 100).toFixed(2)}%
-  </div>
-)}
+            color:
+              score > 0.75 ? "#155724" :
+              score > 0.40 ? "#856404" :
+                             "#721c24"
+          }}
+        >
+          Similarity Score: {(score * 100).toFixed(2)}%
+        </div>
+      )}
     </div>
   );
 }
